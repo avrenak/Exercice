@@ -1,0 +1,20 @@
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.orange {
+  color: orange;
+}
+
+.blink {
+  animation: blinker 3s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+from { opacity: 0.1; }
+to { opacity: 0.9; }
+}

@@ -1,0 +1,19 @@
+<span *ngIf="!error">
+  <mat-icon class="green" matTooltip="Server is online."
+  [matTooltipPosition]="'before'">
+    check_circle_outline
+  </mat-icon>
+</span>
+<span *ngIf="error && error.status === 504">
+  <mat-icon class="orange blink" matTooltip="Server is not responding in time."
+  [matTooltipPosition]="'before'">
+    watch_later
+  </mat-icon>
+</span>
+<span *ngIf="error && error.status === 503">
+  <mat-icon class="red blink" matTooltip="Server is unavailable."
+  [matTooltipPosition]="'before'">
+    highlight_off
+  </mat-icon>
+</span>
+

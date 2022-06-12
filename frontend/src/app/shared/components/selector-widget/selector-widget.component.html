@@ -1,0 +1,10 @@
+<div>
+  <form [formGroup]="intervalSelection">
+    <mat-form-field appearance="fill">
+      <mat-label>Interval selection...</mat-label>
+      <mat-select [formControl]="selectInterval" name="select" (selectionChange)="onSelectionChange($event)">
+        <mat-option *ngFor="let interval of chartsIntervals" [value]="interval.value">{{interval.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>

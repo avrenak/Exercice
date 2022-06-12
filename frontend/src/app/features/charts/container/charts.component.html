@@ -1,0 +1,64 @@
+<ng-container *ngIf="{
+  data: $data | async
+} as _">
+  <div class="container">
+    <h1>Traffic</h1>
+    <div class="flex">
+      <div class="flex flex-item-basis">
+        <form [formGroup]="siteSelection">
+          <mat-form-field appearance="fill">
+            <mat-label>Site selection...</mat-label>
+            <mat-select [formControl]="selectSite" name="select" (selectionChange)="onSelectionChange()">
+              <mat-option *ngFor="let site of availableSites" [value]="site.value">{{site.viewValue}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <span *ngIf="activateButtons" class="flex">
+          <button class="ml2" mat-stroked-button (click)="cancelSelection()">CANCEL</button>
+          <button class="ml2" mat-stroked-button color="accent" (click)="updateSelection()">UPDATE</button>
+        </span>
+      </div>
+      <div class="flex-item-grow"></div>
+      <div class="flex-item-basis" *ngIf="_.data">
+        <app-error-widget [error]="_.data.error"></app-error-widget>
+      </div>
+    </div>
+
+    <div cdkDropList class="chart-list" (cdkDropListDropped)="drop($event)">
+      <div class="chart-box" *ngFor="let chart of chartsConf" cdkDrag>
+        <mat-card class="mb2">
+          <mat-card-content class="flex">
+            <div class="chart-handle" cdkDragHandle>
+              <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
+            </div>
+            <div *ngIf="_.data && _.data.data" class="flex">
+              <app-line-chart [config]="chart" [chartData]="_.data.data"></app-line-chart>
+              <div *ngIf="chart.id === 1">
+                <mat-card>
+                  <mat-card-content class="center">
+                    Average traffic : {{ getAverageTraffic(_.data.data.trafficOut) }}
+                  </mat-card-content>
+                </mat-card>
+                <app-selector-widget [defaultInterval]="chart.interval" (intervalChange)="changeChartIntervalConfig($event,chart.id)"></app-selector-widget>
+              </div>
+              <div *ngIf="chart.id === 2">
+                <mat-card>
+                  <mat-card-content class="center">
+                    Max traffic : {{ getMaxTraffic(_.data.data.trafficOut) }}
+                  </mat-card-content>
+                </mat-card>
+                <app-selector-widget [defaultInterval]="chart.interval" (intervalChange)="changeChartIntervalConfig($event,chart.id)"></app-selector-widget>
+              </div>
+            </div>
+            <div *ngIf="!_.data || !_.data.data" class="flex center-spin">
+              <mat-spinner></mat-spinner>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</ng-container>

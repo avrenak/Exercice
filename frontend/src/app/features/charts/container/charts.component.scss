@@ -1,0 +1,43 @@
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+}
+
+.chart-handle {
+  height: 300px;
+  opacity: 0.6;
+}
+
+.center {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  margin: auto;
+}
+
+.center-spin {
+  margin: auto;
+  height: 300px;
+  opacity: 0.5;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-item-basis {
+  flex-grow: 0;
+  flex-basis: 0;
+}
+
+.flex-item-grow {
+  flex-grow: 2;
+}
+
+.ml2 {
+  margin-left: 2%;
+}
+
+.mb2 {
+  margin-bottom: 0.5%;
+}
