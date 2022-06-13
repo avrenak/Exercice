@@ -9,9 +9,9 @@ class SiteData {
     this.actualTimeStamp = 1513326600;
     this.timeStep = 300;
     this.serverDown = false;
-    this.timerMax = 3;
+    this.timerMax = 2;
     this.timer = 0;
-    this.latency = Math.round(Math.random() * 6000);
+    this.latency = Math.round(Math.random() * 2500);
     this.actualTime = Date.now();
     if (unit == "A") {
       this.trafficOut = [
@@ -156,7 +156,7 @@ class SiteData {
         if (Math.random() > 0.93) {
           this.serverDown = true;
         } else {
-          this.latency = Math.round(Math.random() * 2400);
+          this.latency = Math.round(Math.random() * 2500);
         }
       }
     }

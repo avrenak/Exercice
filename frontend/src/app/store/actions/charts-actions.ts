@@ -5,6 +5,7 @@ import { Site, TimeStamp } from "../../interfaces/charts.interface";
 
 const feature = "Charts Page";
 
+//#region TimeStamp
 export const getTimeStampRequest = createAction(
   `[${feature}] getTimeStampRequest`,
   props<{ site: string, interval: number }>()
@@ -19,7 +20,9 @@ export const getTimeStampError = createAction(
   `[${feature}] getTimeStampError`,
   props<{ site: string, error: HttpErrorResponse}>()
 );
+//#endregion
 
+//#region updateSite
 export const updateSiteRequest = createAction(
   `[${feature}] updateSiteRequest`,
   props<{ site: string, firstTimeStamp: number}>()
@@ -34,3 +37,4 @@ export const updateSiteError = createAction(
   `[${feature}] updateSiteError`,
   props<{ site: string, error: HttpErrorResponse}>()
 );
+//#endregion

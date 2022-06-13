@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Site } from 'src/app/interfaces/charts.interface';
 import { Store } from '@ngrx/store';
+import { Site } from '../../../interfaces/charts.interface';
 import { ApiActions } from '../../../store/actions';
-import { ApiSelectors } from 'src/app/store/selectors';
-import { SITES_AVAILABLES, CHARTS_CONFIG, CHARTS_INTERVALS, ChartsConfig } from 'src/app/config/charts.config';
+import { ApiSelectors } from '../../../store/selectors';
+import { SITES_AVAILABLES, CHARTS_CONFIG, CHARTS_INTERVALS, ChartsConfig } from '../../../config/charts.config';
 
 
 @Component({
@@ -13,7 +13,9 @@ import { SITES_AVAILABLES, CHARTS_CONFIG, CHARTS_INTERVALS, ChartsConfig } from 
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, OnDestroy {
+
+  private timer: any;
 
   chartsIntervals = CHARTS_INTERVALS;
   chartsConf = CHARTS_CONFIG;
@@ -40,17 +42,22 @@ export class ChartsComponent implements OnInit {
 
     this.getTimeStampDispatch();
 
-    // auto update on interval of 5 seconds
-    setInterval(() => {
+    // auto updater on interval of 5 seconds
+    this.timer = setInterval(() => {
       this.getTimeStampDispatch();
     }, 5000);
 
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timer);
   }
 
   getTimeStampDispatch() {
     this.store.dispatch(ApiActions.getTimeStampRequest({site: this.precedentSelection, interval: this.maxInterval}));
   }
 
+  //#region Site selector
   onSelectionChange() {
     this.activateButtons = true;
   }
@@ -65,11 +72,15 @@ export class ChartsComponent implements OnInit {
     this.activateButtons = false;
     this.getTimeStampDispatch();
   }
+  //#endregion
 
+  //#region drag n drop of charts
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.chartsConf, event.previousIndex, event.currentIndex);
   }
+  //#endregion
 
+  //#region additional calculations on provided data
   getAverageTraffic(data: [number, number][]) {
     return (data.map(e => e[1]).reduce((a, b) => a+b) / (data.length-1) / 1000000).toFixed(2) + ' Mo';
   }
@@ -77,7 +88,9 @@ export class ChartsComponent implements OnInit {
   getMaxTraffic(data: [number, number][]) {
     return (Math.max(...data.map(e => e[1])) / 1000000).toFixed(2) + ' Mo';
   }
+  //#endregion
 
+  //#region data interval handling (Bonus)
   selectMaxInterval (chartsConf: ChartsConfig[]) {
     return Math.max(...chartsConf.map(e => e.interval));
   }
@@ -92,5 +105,6 @@ export class ChartsComponent implements OnInit {
     this.maxInterval = this.selectMaxInterval(this.chartsConf);
     this.getTimeStampDispatch();
   }
+  //#endregion
 
 }

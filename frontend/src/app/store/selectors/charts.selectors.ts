@@ -15,6 +15,7 @@ export const reducers: ActionReducerMap<State> = {
 
 export const selectChartState = createFeatureSelector<fromCharts.State>('charts');
 
+//#region Charts Entity Selectors
 export const selectChartIds = createSelector(
   selectChartState,
   fromCharts.selectSiteIds // shorthand for usersState => fromUser.selectUserIds(usersState)
@@ -34,7 +35,9 @@ export const selectUserTotal = createSelector(
   selectChartState,
   fromCharts.selectSiteTotal
 );
+//#endregion
 
+//#region Charts Additional Selectors
 export const selectCurrentSiteId = createSelector(
   selectChartState,
   fromCharts.getSelectedSiteId
@@ -55,3 +58,4 @@ export const selectCurrentSite = createSelector(
   selectCurrentSiteId,
   (siteEntities, siteId) => siteId && siteEntities[siteId]
 );
+//#endregion

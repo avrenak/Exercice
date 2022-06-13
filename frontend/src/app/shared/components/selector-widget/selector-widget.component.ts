@@ -5,8 +5,7 @@ import { CHARTS_INTERVALS } from '../../../config/charts.config';
 
 @Component({
   selector: 'app-selector-widget',
-  templateUrl: './selector-widget.component.html',
-  styleUrls: ['./selector-widget.component.scss']
+  templateUrl: './selector-widget.component.html'
 })
 export class SelectorWidgetComponent implements OnInit {
 

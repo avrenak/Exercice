@@ -10,6 +10,7 @@ exports.getData = (req, res) => {
   } 
     
   if (site) {
+    console.log(`Front asked for ${site.getId()} timestamp ${req.params.timestamp} : Down (${site.getServerDown()}), Latency (${site.getLatency()})`);
     if (site.getServerDown()) {
     res.status(503).send('Site unavailable');
     } else {

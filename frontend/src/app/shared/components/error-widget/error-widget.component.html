@@ -16,4 +16,10 @@
     highlight_off
   </mat-icon>
 </span>
+<span *ngIf="error && error.statusText === 'Unknown Error'">
+  <mat-icon class="red blink" matTooltip="Backend is not connected."
+  [matTooltipPosition]="'before'">
+    block
+  </mat-icon>
+</span>
 

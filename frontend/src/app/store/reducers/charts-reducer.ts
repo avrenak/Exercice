@@ -40,16 +40,22 @@ export const chartsReducer = createReducer(
       return {
         ...state,
         selectedSiteId: site,
-        lastTimeStamp: payload.lastTimeStamp
+        lastTimeStamp: payload.lastTimeStamp,
+        error: null
       };
   }),
   on(ApiActions.getTimeStampError,
     (state, { site, error }) => {
       return {
         ...state,
-        selectedUserId: site,
+        selectedSiteId: site,
         error
       };
+  }),
+  // That reducer action is here to transfer the error at the good emplacement (With real data it should not be necessary since another store would handle server connexions)
+  on(ApiActions.getTimeStampError,
+    (state, { site, error }) => {
+      return adapter.upsertOne(buildSiteState(site, state.entities[site] ? state.entities[site].data : null, error), state);
   }),
   on(ApiActions.updateSiteResponse,
     (state, { site, payload }) => {

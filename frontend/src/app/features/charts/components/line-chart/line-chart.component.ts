@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartsConfig } from 'src/app/config/charts.config';
-import { Site } from 'src/app/interfaces/charts.interface';
+import { ChartsConfig } from '../../../../config/charts.config';
+import { Site } from '../../../../interfaces/charts.interface';
 
 @Component({
   selector: 'app-line-chart',
